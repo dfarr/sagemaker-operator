@@ -4,9 +4,6 @@ on:
   release:
     types: [published]
 
-env:
-  IMG: farrd/amazon-sagemaker-operator-for-k8s:${{ env.GITHUB_REF }}
-
 jobs:
   build-and-push:
     name: Build and Push
@@ -25,5 +22,9 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
     - name: Build
       run: make docker-build
+      env:
+        IMG: farrd/amazon-sagemaker-operator-for-k8s:${{ env.GITHUB_REF }}
     - name: Push
       run: make docker-push
+      env:
+        IMG: farrd/amazon-sagemaker-operator-for-k8s:${{ env.GITHUB_REF }}
