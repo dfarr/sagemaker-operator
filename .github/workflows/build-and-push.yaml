@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Clone aws/amazon-sagemaker-operator-for-k8s
+    - name: Clone
       uses: actions/checkout@v2
       with:
         repository: aws/amazon-sagemaker-operator-for-k8s
+    - name: Build
+      run: make docker-build
