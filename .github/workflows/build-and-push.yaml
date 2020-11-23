@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Test
-      run: echo $GITHUB_REF
     - name: Clone
       uses: actions/checkout@v2
       with:
@@ -20,13 +18,16 @@ jobs:
     - name: Login
       uses: docker/login-action@v1
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        username: farrd
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    - name: Extract tag
+      id: extract_tag
+      run: echo ::set-output name=TAG::${GITHUB_REF/refs\/tags\//}
     - name: Build
       run: make docker-build
       env:
-        IMG: farrd/amazon-sagemaker-operator-for-k8s:${{ env.GITHUB_REF }}
+        IMG: farrd/amazon-sagemaker-operator-for-k8s:${{ steps.extract_tag.outputs.TAG }}
     - name: Push
       run: make docker-push
       env:
-        IMG: farrd/amazon-sagemaker-operator-for-k8s:${{ env.GITHUB_REF }}
+        IMG: farrd/amazon-sagemaker-operator-for-k8s:${{ steps.extract_tag.outputs.TAG }}
