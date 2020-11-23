@@ -2,7 +2,7 @@ name: Sagemaker Operator Image
 
 on:
   release:
-    types: [created, edited]
+    types: [published]
 
 env:
   IMG: farrd/amazon-sagemaker-operator-for-k8s:${{ env.GITHUB_REF }}
