@@ -1,9 +1,11 @@
 name: Sagemaker Operator Image
 
-on: push
+on:
+  release:
+    types: [created, published, unpublished]
 
 env:
-  IMG: farrd/amazon-sagemaker-operator-for-k8s:latest
+  IMG: farrd/amazon-sagemaker-operator-for-k8s:${{ GITHUB_REF }}
 
 jobs:
   build-and-push:
@@ -15,6 +17,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: aws/amazon-sagemaker-operator-for-k8s
+        ref: ${{ GITHUB_REF }}
     - name: Login
       uses: docker/login-action@v1
       with:
