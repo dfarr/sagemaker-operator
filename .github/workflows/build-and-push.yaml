@@ -1,10 +1,10 @@
-name: Build and Push Sagemaker Docker Image
+name: Sagemaker Operator Images
 
 on: push
 
 jobs:
-  build:
-    name: build
+  build-and-push:
+    name: Build and Push
     runs-on: ubuntu-latest
 
     steps:
@@ -14,3 +14,9 @@ jobs:
         repository: aws/amazon-sagemaker-operator-for-k8s
     - name: Build
       run: make docker-build
+      env:
+        IMG: dfarr/amazon-sagemaker-operator-for-k8s:latest
+    - name: Push
+      run: make docker-push
+      env:
+        TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
