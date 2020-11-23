@@ -1,5 +1,7 @@
 name: Build and Push Sagemaker Docker Image
 
+on: push
+
 jobs:
   build:
     name: build
